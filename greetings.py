@@ -1,0 +1,6 @@
+username = "Bogdan"
+title = "Этап 1 Задание 1"
+content = "Решить задание 1"
+status = "Active"
+created_date = "06-12-2024"
+issue_date = "13-12-2024"
