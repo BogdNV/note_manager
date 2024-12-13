@@ -1,11 +1,22 @@
-status = ["выполнено", "в процессе", "отложено"]
-format_str = 'Текущий статус заметки: "{}"'
+statuses = ["выполнено", "в процессе", "отложено"]
 
-print(format_str.format(status[1]))
-number_status = input("Выберите новый статус заметки:\n1. выполнено\n2. в процессе\n3. отложено\n").strip()
+# Текущий статус заметки
+current_status = "в процессе"
+print(f"Текущий статус заметки: \"{current_status}\"\n")
 
-if not number_status.isdigit():
-    print("не число")
-else:
-    number_status = int(number_status)
-    print(f'Статус заметки успешно обновлён на: "{status[number_status-1]}"')
+print("Выберите новый статус заметки:\n1. выполнено\n2. в процессе\n3. отложено")
+
+while True:
+    try:
+        status = int(input("Выберите новый статус (укажите число): "))
+        if status < 0 or status >= len(statuses):
+            print(f"Ошибка введите число от 1 до {len(statuses)}")
+        elif statuses[status-1] == current_status:
+            print("Статус не обновлён")
+        else:
+            print(f"Статус заметки успешно обновлён на: \"{statuses[status-1]}\"")
+            current_status = statuses[status-1]
+            break
+
+    except:
+        print("Это не число, повторите попытку")
