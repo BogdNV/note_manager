@@ -60,3 +60,14 @@ def get_note():
     note["created_date"] = created_date
     note["issue_date"] = issue_date
     return note
+
+notes = []
+print("Добро пожаловать в \"Менеджер заметок\"! Вы можете добавить новую заметку.")
+
+while True:
+    notes.append(get_note())
+    flag = input("Хотите добавить ещё одну заметку? (да/нет): ").strip().lower()
+    if flag == "нет":
+        break
+
+print_notes(notes)
