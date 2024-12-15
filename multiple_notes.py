@@ -1,4 +1,5 @@
 from datetime import datetime as dt
+date_now = dt.now().date()
 
 MESSAGE = "Неверный формат, повторите попытку"
 
@@ -40,3 +41,22 @@ def print_notes(notes):
             print()
     else:
         print("\nСписок заметок пуст.")
+
+#запрашивает у пользователя данные для заметки и формирует словарь
+def get_note():
+    global date_now
+
+    note = {}
+    name = input("Введите имя пользователя: ").strip()
+    title = input("Введите заголовок заметки: ").strip()
+    content = input("Введите описание заметки: ").strip()
+    status = get_status()
+    created_date = date_now
+    issue_date = get_date("%d-%m-%Y")
+    note["user"] = name
+    note["title"] = title
+    note["content"] = content
+    note["status"] = status
+    note["created_date"] = created_date
+    note["issue_date"] = issue_date
+    return note
