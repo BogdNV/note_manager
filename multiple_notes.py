@@ -25,3 +25,18 @@ def get_status():
 
         except:
             print(MESSAGE)
+
+#выводит на экран список заметок
+def print_notes(notes):
+    if notes:
+        print("\nСписок заметок:")
+        for i, note in enumerate(notes):
+            print(f"{i+1}. Имя: {note['user']}")
+            print((" "*len(f"{i+1}. ")) + f"Заголовок: {note["title"]}")
+            print((" "*len(f"{i+1}. ")) + f"Описание: {note["content"]}")
+            print((" "*len(f"{i+1}. ")) + f"Статус: {note["status"]}")
+            print((" "*len(f"{i+1}. ")) + f"Дата создания: {note["created_date"].strftime("%d-%m-%Y")}")
+            print((" "*len(f"{i+1}. ")) + f"Дедлайн: {note["issue_date"].strftime("%d-%m-%Y")}")
+            print()
+    else:
+        print("\nСписок заметок пуст.")
