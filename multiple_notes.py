@@ -51,13 +51,12 @@ def get_note():
     title = input("Введите заголовок заметки: ").strip()
     content = input("Введите описание заметки: ").strip()
     status = get_status()
-    created_date = date_now
     issue_date = get_date("%d-%m-%Y")
     note["user"] = name
     note["title"] = title
     note["content"] = content
     note["status"] = status
-    note["created_date"] = created_date
+    note["created_date"] = date_now
     note["issue_date"] = issue_date
     return note
 
