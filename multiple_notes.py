@@ -1,5 +1,6 @@
 from datetime import datetime as dt
 date_now = dt.now().date()
+notes = []
 
 MESSAGE = "Неверный формат, повторите попытку"
 
@@ -7,9 +8,9 @@ MESSAGE = "Неверный формат, повторите попытку"
 def get_date(format):
     while True:
         try:
-            date_string = input("Введите дедлайн (день-месяц-год): ").strip()
-            date_string = dt.strptime(date_string, format).date()
-            return date_string
+            date = input("Введите дедлайн (день-месяц-год): ").strip()
+            date = dt.strptime(date, format).date()
+            return date
         except:
             print(MESSAGE)
 
@@ -18,7 +19,7 @@ def get_status():
     statuses = ["новая", "в процессе", "выполнено"]
     while True:
         try:
-            n = int(input("Введите статус заметки (укажите число)\n1.новая\n2.в процессе\n3.выполнено\n").strip())
+            n = int(input("Введите статус заметки (укажите число):\n1.новая\n2.в процессе\n3.выполнено\n").strip())
             if 1 <= n <= len(statuses) - 1:
                 return statuses[n - 1]
             else:
@@ -28,7 +29,7 @@ def get_status():
             print(MESSAGE)
 
 #выводит на экран список заметок
-def print_notes(notes):
+def display_notes(notes):
     if notes:
         print("\nСписок заметок:")
         for i, note in enumerate(notes):
@@ -42,17 +43,39 @@ def print_notes(notes):
     else:
         print("\nСписок заметок пуст.")
 
+def check_note(dict_list, name, title):
+    for d in dict_list:
+        if d.get("name") == name and d.get("content") == title:
+            return True
+    return False
+
+def get_name_title():
+    name = input("Введите имя пользователя: ").strip()
+    while not name:
+        print("Имя не может быть пустым.")
+        name = input("Введите имя пользователя: ").strip()
+
+    title = input("Введите заголовок заметки: ").strip()
+    while not title:
+        print("Заголовок не может быть пустым.")
+        title = input("Введите заголовок заметки: ").strip()
+    return name, title
+
 #запрашивает у пользователя данные для заметки и формирует словарь
 def get_note():
     global date_now
+    global notes
 
     note = {}
-    name = input("Введите имя пользователя: ").strip()
-    title = input("Введите заголовок заметки: ").strip()
-    content = input("Введите описание заметки: ").strip()
+    name, title = get_name_title()
+    if not check_note(notes, name, title):
+        print("Такая заметка уже существует")
+        return
+
+    content = input("Введите описание заголовка: ").strip()
     status = get_status()
     issue_date = get_date("%d-%m-%Y")
-    note["user"] = name
+    note["name"] = name
     note["title"] = title
     note["content"] = content
     note["status"] = status
@@ -60,13 +83,16 @@ def get_note():
     note["issue_date"] = issue_date
     return note
 
-notes = []
+
 print("Добро пожаловать в \"Менеджер заметок\"! Вы можете добавить новую заметку.")
 
 while True:
-    notes.append(get_note())
+    note = get_note()
+    if note:
+        notes.append(note)
+
     flag = input("Хотите добавить ещё одну заметку? (да/нет): ").strip().lower()
     if flag == "нет":
         break
 
-print_notes(notes)
+display_notes(notes)
