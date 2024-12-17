@@ -19,17 +19,20 @@ def get_status():
     statuses = ["новая", "в процессе", "выполнено"]
     while True:
         try:
-            n = int(input("Введите статус заметки (укажите число):\n1.новая\n2.в процессе\n3.выполнено\n").strip())
-            if 1 <= n <= len(statuses) - 1:
-                return statuses[n - 1]
-            else:
+            n = int(input("Введите статус заметки (укажите число):"
+                          "\n1.новая"
+                          "\n2.в процессе"
+                          "\n3.выполнено\n").strip())
+            if not (1 <= n <= len(statuses) - 1):
                 print("Вы ввели неверное число!")
-
+            else:
+                return statuses[n - 1]
         except:
             print(MESSAGE)
 
 #выводит на экран список заметок
-def display_notes(notes):
+def display_notes():
+    global notes
     if notes:
         print("\nСписок заметок:")
         for i, note in enumerate(notes):
@@ -41,14 +44,16 @@ def display_notes(notes):
             print((" "*len(f"{i+1}. ")) + f"Дедлайн: {note["issue_date"].strftime("%d-%m-%Y")}")
             print()
     else:
-        print("\nСписок заметок пуст.")
+        print("Список заметок пуст.")
 
+#проверяет существует ли заметка в списке
 def check_note(dict_list, name, title):
     for d in dict_list:
         if d.get("name", None) == name and d.get("title", None) == title:
             return True
     return False
 
+#запрашивает у пользователся имя и заголовок заметки
 def get_name_title():
     name = input("Введите имя пользователя: ").strip()
     while not name:
@@ -73,6 +78,9 @@ def get_note():
         return
 
     content = input("Введите описание заголовка: ").strip()
+    if not content:
+        print("Описание оставлено пустым.")
+
     status = get_status()
     issue_date = get_date("%d-%m-%Y")
 
@@ -86,15 +94,30 @@ def get_note():
     return note
 
 
-print("Добро пожаловать в \"Менеджер заметок\"! Вы можете добавить новую заметку.")
+def main():
+    print("Добро пожаловать в \"Менеджер заметок\"!")
 
-while True:
-    note = get_note()
-    if note:
-        notes.append(note)
+    while True:
+        try:
+            flag = int(input("Выберите пункт (укажите число):"
+                         "\n1. Добавить новую заметку"
+                         "\n2. Показать текущие заметки"
+                         "\n3. Завершить\n").strip())
+            if not (1 <= flag <= 3):
+                print("Неверный пункт")
+                continue
+            elif flag == 1:
+                note = get_note()
+                if note:
+                    notes.append(note)
+                    print("Заметка упешно добавлена!")
+            elif flag == 2:
+                display_notes()
+            else:
+                break
+        except:
+            print(MESSAGE)
 
-    flag = input("Хотите добавить ещё одну заметку? (да/нет): ").strip().lower()
-    if flag == "нет":
-        break
+if __name__ == "__main__":
+    main()
 
-display_notes(notes)
