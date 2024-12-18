@@ -114,7 +114,7 @@ def main():
                 display_notes(notes)
             else:
                 break
-        except:
+        except ValueError:
             print(MESSAGE)
 
 if __name__ == "__main__":
