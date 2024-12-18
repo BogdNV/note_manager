@@ -3,30 +3,34 @@ from datetime import datetime as dt, timedelta
 import random
 
 
-# names = ["Богдан", "Антон", "Андрей", "Роман", "Анатолий", "Евгений"]
-# titles = ["Покушать", "Сходить в зал", "пойти на работу", "Сделать ДЗ", "Подстричься", "Запустить бота"]
-# statuses = ["новая", "в процессе", "выполнено"]
-# lst = []
-#
-# for i in range(5):
-#     n = random.randint(0, len(names)-1)
-#     t = random.randint(0, len(titles)-1)
-#     s = random.randint(0, len(statuses) - 1)
-#     day = random.randint(0, 15)
-#     d = {
-#         "name": names[n],
-#         "title": titles[t],
-#         "content": "",
-#         "status": statuses[s],
-#         "created_date": date_now,
-#         "issue_date": date_now + timedelta(days=day)
-#     }
-#     lst.append(d)
+names = ["Богдан", "Антон", "Андрей", "Роман", "Анатолий", "Евгений"]
+titles = ["Покушать", "Сходить в зал", "пойти на работу", "Сделать ДЗ", "Подстричься", "Запустить бота"]
+statuses = ["новая", "в процессе", "выполнено"]
+lst = []
+
+for i in range(5):
+    n = random.randint(0, len(names)-1)
+    t = random.randint(0, len(titles)-1)
+    s = random.randint(0, len(statuses) - 1)
+    day = random.randint(0, 15)
+    d = {
+        "name": names[n],
+        "title": titles[t],
+        "content": "",
+        "status": statuses[s],
+        "created_date": date_now,
+        "issue_date": date_now + timedelta(days=day)
+    }
+    lst.append(d)
 
 def del_note(list_notes, key, val):
-    if list_notes:
-        return list(filter(lambda x: x.get(key).strip().lower() != val.lower(), list_notes))
-    return []
+    res = list(filter(lambda x: x.get(key).strip().lower() != val.lower(), list_notes))
+    if len(res) != len(list_notes):
+        print("Удаление успешно завершено!")
+        return res
+    else:
+        print("Заметок с такими значениями не найдено!")
+        return list_notes
 
 def main():
     while True:
