@@ -31,8 +31,7 @@ def get_status():
             print(MESSAGE)
 
 #выводит на экран список заметок
-def display_notes():
-    global notes
+def display_notes(notes):
     if notes:
         print("\nСписок заметок:")
         for i, note in enumerate(notes):
@@ -112,7 +111,7 @@ def main():
                     notes.append(note)
                     print("Заметка упешно добавлена!")
             elif flag == 2:
-                display_notes()
+                display_notes(notes)
             else:
                 break
         except:
