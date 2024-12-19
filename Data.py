@@ -11,13 +11,26 @@ def generate_notes(cnt):
         n = random.randint(0, len(names) - 1)
         t = random.randint(0, len(titles) - 1)
         s = random.randint(0, len(statuses) - 1)
-        day = random.randint(0, 15)
-        d = {
-            "name": names[n],
-            "title": titles[t],
-            "content": "",
-            "status": statuses[s],
-            "created_date": date_now,
-            "issue_date": date_now + timedelta(days=day)
-        }
+        day = random.randint(1, 15)
+        d = {}
+        d.setdefault("id", id(d))
+        d.setdefault("name", names[n])
+        d.setdefault("title", titles[t])
+        d.setdefault("content", "")
+        d.setdefault("status", statuses[s])
+        d.setdefault("created_date", date_now)
+        d.setdefault("issue_date", date_now + timedelta(days=day))
         yield d
+
+def print_(func):
+    def wrapper(*args, **kwg):
+        print('-'*20)
+        if args:
+            res = func(*args)
+            print('-'*20)
+            return res
+        if kwg:
+            res = func(**kwg)
+            print('-'*20)
+            return res
+    return wrapper

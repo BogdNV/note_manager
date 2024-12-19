@@ -30,18 +30,20 @@ def get_status():
         except:
             print(MESSAGE)
 
+
 #выводит на экран список заметок
 def display_notes(notes):
     if notes:
-        print("\nСписок заметок:")
+        print("Список заметок:")
+        print("-"*20)
         for i, note in enumerate(notes):
-            print(f"{i+1}. Имя: {note['name']}")
-            print((" "*len(f"{i+1}. ")) + f"Заголовок: {note["title"]}")
-            print((" "*len(f"{i+1}. ")) + f"Описание: {note["content"]}")
-            print((" "*len(f"{i+1}. ")) + f"Статус: {note["status"]}")
-            print((" "*len(f"{i+1}. ")) + f"Дата создания: {note["created_date"].strftime("%d-%m-%Y")}")
-            print((" "*len(f"{i+1}. ")) + f"Дедлайн: {note["issue_date"].strftime("%d-%m-%Y")}")
-            print()
+            print(f"{i+1}. Имя: {note.get('name', "")}")
+            print((" "*len(f"{i+1}. ")) + f"Заголовок: {note.get("title", "")}")
+            print((" "*len(f"{i+1}. ")) + f"Описание: {note.get("content", "")}")
+            print((" "*len(f"{i+1}. ")) + f"Статус: {note.get("status","")}")
+            print((" "*len(f"{i+1}. ")) + f"Дата создания: {note.get("created_date", date_now).strftime("%d-%m-%Y")}")
+            print((" "*len(f"{i+1}. ")) + f"Дедлайн: {note.get("issue_date", date_now).strftime("%d-%m-%Y")}")
+            print("-"*20)
     else:
         print("Список заметок пуст.")
 

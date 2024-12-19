@@ -1,43 +1,67 @@
 from multiple_notes import display_notes, MESSAGE
-from Data import generate_notes
+from Data import generate_notes, print_
 
-
-def del_note(list_notes, key, val):
-    res = list(filter(lambda x: x.get(key).strip().lower() != val.lower(), list_notes))
-    if len(res) != len(list_notes):
-        print("="*10)
-        print("Удаление успешно завершено!")
-        print("=" * 10)
-        return res
-    else:
-        print("=" * 10)
-        print("Заметок с таким именем пользователя не найдено") if key == "name" else (
-            print("Заметок с таким заголовком не найдено"))
-        print("=" * 10)
+@print_
+def delete_notes_by_criteria(list_notes, val):
+    if not list_notes:
+        print("Список заметок пуст!")
         return list_notes
+
+    res = list(filter(lambda x: x.get("name").strip().lower() != val.lower() and
+                      x.get("title").strip().lower() != val.lower(),
+                      list_notes))
+    if len(res) != len(list_notes):
+        flag = input("Уверены что хотите удалить? (да/нет):").strip().lower()
+        if flag == "да":
+            print("Удаление успешно завершено!")
+            return res
+        else:
+            return list_notes
+    else:
+        print("Заметок с таким именем пользователя или заголовком не найдено")
+        return list_notes
+
+@print_
+def delete_note_by_number(notes, number):
+    try:
+        number = int(number)
+        if number < len(notes):
+            flag = input("Уверены что хотите удалить? (да/нет):").strip().lower()
+            if flag == "да":
+                notes.pop(number)
+                print("Удаление успешно завершено!")
+        return notes
+    except ValueError:
+        print(MESSAGE)
+    except IndexError:
+        print("Неверный номер, повторите попытку!")
+    return notes
 
 lst = list(generate_notes(5))
 
 while True:
     try:
         flag = int(input("Выберите пункт (укажите число):"
-                         "\n1. Удалить заметку по имени пользователя"
-                         "\n2. Удалить заметку по имени названию заголовка"
+                         "\n1. Удалить все заметки по имени пользователя или названию заголовка"
+                         "\n2. Удалить по номеру"
                          "\n3. Показать текущие заметки"
                          "\n4. Завершить\n").strip())
         if not (1 <= flag <= 4):
             print("Неверный пункт")
             continue
         elif flag == 1:
-            name = input("Введите имя: ").strip()
-            lst = del_note(lst, "name", name)
+            name = input("Введите имя или заголовок: ").strip()
+            lst = delete_notes_by_criteria(lst, name)
         elif flag == 2:
-            title = input("Введите заголовок: ").strip()
-            lst = del_note(lst, "title", title)
+            n = int(input("Укажите номер заметки: ").strip().lower())
+            lst = delete_note_by_number(lst, n-1)
         elif flag == 3 and "lst" in locals():
             display_notes(lst)
         else:
             break
     except ValueError:
         print(MESSAGE)
+    except IndexError:
+        print("Неверный номер, повторите попытку!")
+
 
