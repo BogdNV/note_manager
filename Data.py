@@ -10,7 +10,7 @@ def generate_notes(cnt):
     for i in range(cnt):
         day = random.randint(1, 15)
         d = {}
-        d.setdefault("id", id(d))
+        # d.setdefault("id", id(d))
         d.setdefault("username", random.choice(names))
         d.setdefault("title", random.choice(titles))
         d.setdefault("content", "")
