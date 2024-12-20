@@ -22,12 +22,7 @@ def generate_notes(cnt):
 def print_(func):
     def wrapper(*args, **kwg):
         print('-'*20)
-        if args:
-            res = func(*args)
-            print('-'*20)
-            return res
-        if kwg:
-            res = func(**kwg)
-            print('-'*20)
-            return res
+        res = func(*args, **kwg)
+        print('-' * 20)
+        return res
     return wrapper
