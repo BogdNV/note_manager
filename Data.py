@@ -8,16 +8,13 @@ statuses = ["новая", "в процессе", "выполнено"]
 
 def generate_notes(cnt):
     for i in range(cnt):
-        n = random.randint(0, len(names) - 1)
-        t = random.randint(0, len(titles) - 1)
-        s = random.randint(0, len(statuses) - 1)
         day = random.randint(1, 15)
         d = {}
         d.setdefault("id", id(d))
-        d.setdefault("name", names[n])
-        d.setdefault("title", titles[t])
+        d.setdefault("name", random.choice(names))
+        d.setdefault("title", random.choice(titles))
         d.setdefault("content", "")
-        d.setdefault("status", statuses[s])
+        d.setdefault("status", random.choice(statuses))
         d.setdefault("created_date", date_now)
         d.setdefault("issue_date", date_now + timedelta(days=day))
         yield d
