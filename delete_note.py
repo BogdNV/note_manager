@@ -7,7 +7,7 @@ def delete_notes_by_criteria(list_notes, val):
         print("Список заметок пуст!")
         return list_notes
 
-    res = list(filter(lambda x: x.get("name").strip().lower() != val.lower() and
+    res = list(filter(lambda x: x.get("username").strip().lower() != val.lower() and
                       x.get("title").strip().lower() != val.lower(),
                       list_notes))
     if len(res) != len(list_notes):

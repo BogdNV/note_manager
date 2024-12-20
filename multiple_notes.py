@@ -37,7 +37,7 @@ def display_notes(notes):
         print("Список заметок:")
         print("-"*20)
         for i, note in enumerate(notes):
-            print(f"{i+1}. Имя: {note.get('name', "")}")
+            print(f"{i+1}. Имя: {note.get('username', "")}")
             print((" "*len(f"{i+1}. ")) + f"Заголовок: {note.get("title", "")}")
             print((" "*len(f"{i+1}. ")) + f"Описание: {note.get("content", "")}")
             print((" "*len(f"{i+1}. ")) + f"Статус: {note.get("status","")}")
@@ -50,7 +50,7 @@ def display_notes(notes):
 #проверяет существует ли заметка в списке
 def check_note(dict_list, name, title):
     for d in dict_list:
-        if d.get("name", None) == name and d.get("title", None) == title:
+        if d.get("username", None) == name and d.get("title", None) == title:
             return True
     return False
 
@@ -85,7 +85,7 @@ def get_note():
     status = get_status()
     issue_date = get_date("%d-%m-%Y")
 
-    note["name"] = name
+    note["username"] = name
     note["title"] = title
     note["content"] = content
     note["status"] = status
