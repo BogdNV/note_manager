@@ -1,5 +1,5 @@
 from datetime import datetime as dt
-from    display_notes_function import display_notes
+from display_notes_function import display_notes
 
 
 date_now = dt.now().date()
