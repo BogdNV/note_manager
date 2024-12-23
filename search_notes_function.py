@@ -1,6 +1,6 @@
 from display_notes_function import display_notes
 from Data import generate_notes
-from multiple_notes import get_status
+from create_note_function import get_status
 
 
 def  search_notes(notes, keyword=None, status=None):
@@ -37,19 +37,24 @@ def handle_choice(choice, notes):
 
 lst = tuple(generate_notes(10))
 
-while True:
-    try:
-        flag = int(input("Выберите пункт (укажите число):"
-                         "\n1. Поиск по ключевому слову"
-                         "\n2. Поиск по статусу"
-                         "\n3. Поиск по ключевому слову и статусу"
-                         "\n4. Показать текущие заметки"
-                         "\n5. Завершить\n").strip())
-        if flag == 5:
-            break
-        elif flag not in (1, 2, 3, 4):
-            print("Неверный пункт")
-            continue
-        display_notes(handle_choice(flag, lst))
-    except ValueError as e:
-        print(e)
+def run_search_notes(notes):
+    while True:
+        try:
+            flag = int(input("Выберите пункт (укажите число):"
+                             "\n1. Поиск по ключевому слову"
+                             "\n2. Поиск по статусу"
+                             "\n3. Поиск по ключевому слову и статусу"
+                             "\n4. Показать текущие заметки"
+                             "\n5. Завершить\n").strip())
+            if flag == 5:
+                break
+            elif flag not in (1, 2, 3, 4):
+                print("Неверный пункт")
+                continue
+            display_notes(handle_choice(flag, notes))
+        except ValueError:
+            print("Неверный формат, повторите попытку")
+
+
+if __name__ == '__main__':
+    run_search_notes(lst)

@@ -1,4 +1,5 @@
-from multiple_notes import MESSAGE
+from wsgiref.util import request_uri
+
 from display_notes_function import display_notes
 from Data import generate_notes, print_
 
@@ -23,46 +24,53 @@ def delete_notes_by_criteria(list_notes, val):
         return list_notes
 
 @print_
-def delete_note_by_number(notes, number):
+def delete_note_by_number(list_notes, number):
+    if not list_notes:
+        print("Список заметок пуст!")
+        return list_notes
+
+    res = list_notes.copy()
+
     try:
-        number = int(number)
-        if number < len(notes):
-            flag = input("Уверены что хотите удалить? (да/нет):").strip().lower()
-            if flag == "да":
-                notes.pop(number)
-                print("Удаление успешно завершено!")
-        return notes
-    except ValueError:
-        print(MESSAGE)
+        flag = input("Уверены что хотите удалить? (да/нет):").strip().lower()
+        if flag == "да":
+            res.pop(number)
+            print("Удаление успешно завершено!")
+        return res
     except IndexError:
         print("Неверный номер, повторите попытку!")
-    return notes
+    return res
 
 lst = list(generate_notes(5))
 
-while True:
-    try:
-        flag = int(input("Выберите пункт (укажите число):"
-                         "\n1. Удалить все заметки по имени пользователя или названию заголовка"
-                         "\n2. Удалить по номеру"
-                         "\n3. Показать текущие заметки"
-                         "\n4. Завершить\n").strip())
-        if not (1 <= flag <= 4):
-            print("Неверный пункт")
-            continue
-        elif flag == 1:
-            name = input("Введите имя или заголовок: ").strip()
-            lst = delete_notes_by_criteria(lst, name)
-        elif flag == 2:
-            n = int(input("Укажите номер заметки: ").strip().lower())
-            lst = delete_note_by_number(lst, n-1)
-        elif flag == 3 and "lst" in locals():
-            display_notes(lst)
-        else:
-            break
-    except ValueError:
-        print(MESSAGE)
-    except IndexError:
-        print("Неверный номер, повторите попытку!")
+def delete_note(list_notes):
+    if not list_notes:
+        print("Список пустой!\n")
+        return list_notes
+
+    while True:
+        try:
+            flag = int(input("Выберите пункт (укажите число):"
+                             "\n1. Удалить все заметки по имени пользователя или названию заголовка"
+                             "\n2. Удалить по номеру"
+                             "\n3. Показать текущие заметки"
+                             "\n4. Завершить\n").strip())
+            if flag == 4:
+                break
+            elif flag not in (1, 2, 3):
+                print("Неверный пункт")
+                continue
+            elif flag == 1:
+                name = input("Введите имя или заголовок: ").strip()
+                list_notes = delete_notes_by_criteria(list_notes, name)
+            elif flag == 2:
+                n = int(input("Укажите номер заметки: ").strip().lower())
+                list_notes = delete_note_by_number(lst, n - 1)
+            else:
+                display_notes(list_notes)
+        except ValueError:
+            print("Неверный формат, повторите попытку")
 
 
+if __name__ == '__main__':
+    delete_note(lst)

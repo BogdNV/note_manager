@@ -1,6 +1,6 @@
 import datetime
 from Data import generate_notes
-from multiple_notes import get_date
+from create_note_function import get_date
 
 lst = list(generate_notes(1))
 
@@ -62,4 +62,7 @@ def update_note(note: dict):
     print("Обновленные данные заметки:")
     print_note(note)
 
-update_note(lst[0])
+
+if __name__ == '__main__':
+
+    update_note(lst[0])
