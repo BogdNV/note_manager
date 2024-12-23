@@ -1,5 +1,6 @@
 from display_notes_function import display_notes
 from Data import generate_notes
+from multiple_notes import get_status
 
 
 def  search_notes(notes, keyword=None, status=None):
@@ -19,10 +20,22 @@ def  search_notes(notes, keyword=None, status=None):
             note for note in notes
             if (note.get("status").lower() == status)
         ]
+    return notes
+
+def handle_choice(choice, notes):
+    keyword = None
+    status = None
+    if choice == 1:
+        keyword = input("Введите критерий: ").strip().lower()
+    elif choice == 2:
+        status = get_status()
+    elif choice == 3:
+        keyword = input("Введите критерий: ").strip().lower()
+        status = get_status()
+    return search_notes(notes, keyword=keyword, status=status)
+
 
 lst = tuple(generate_notes(10))
-
-# display_notes(search_notes(lst, "антон"))
 
 while True:
     try:
@@ -37,17 +50,6 @@ while True:
         elif flag not in (1, 2, 3, 4):
             print("Неверный пункт")
             continue
-        elif flag == 1:
-            keyword = input("Введите критрий: ").strip().lower()
-            display_notes(search_notes(lst, keyword=keyword))
-        elif flag == 2:
-            status = input("Введите статус: ").strip().lower()
-            display_notes(search_notes(lst, status=status))
-        elif flag == 3:
-            keyword = input("Введите критрий: ").strip().lower()
-            status = input("Введите статус: ").strip().lower()
-            display_notes(search_notes(lst, keyword=keyword, status=status))
-        else:
-            display_notes(lst)
+        display_notes(handle_choice(flag, lst))
     except ValueError as e:
         print(e)
