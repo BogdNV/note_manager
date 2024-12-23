@@ -52,7 +52,7 @@ def get_name_title():
     return name, title
 
 #запрашивает у пользователя данные для заметки и формирует словарь
-def get_note():
+def create_note():
     global notes
 
     note = {}
@@ -91,7 +91,7 @@ def main():
                 print("Неверный пункт")
                 continue
             elif flag == 1:
-                note = get_note()
+                note = create_note()
                 if note:
                     notes.append(note)
                     print("Заметка упешно добавлена!")
