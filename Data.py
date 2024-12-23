@@ -1,6 +1,7 @@
-from datetime import timedelta
-from multiple_notes import date_now
+from datetime import timedelta, datetime as dt
 import random
+
+date_now = dt.now().date()
 
 names = ["Богдан", "Антон", "Настя", "Роман", "Анатолий", "Евгений", "Катя", "Леша"]
 titles = ["Список покупок", "Подготовка к экзамену", "Посетить вебинар", "Сделать ДЗ", "Приготовить ужин", "Встреча с заказчиком"]

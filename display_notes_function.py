@@ -1,4 +1,4 @@
-from multiple_notes import date_now
+from Data import date_now
 
 
 #выводит на экран список заметок

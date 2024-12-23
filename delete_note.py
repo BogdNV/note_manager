@@ -1,4 +1,5 @@
-from multiple_notes import display_notes, MESSAGE
+from multiple_notes import MESSAGE
+from display_notes_function import display_notes
 from Data import generate_notes, print_
 
 @print_

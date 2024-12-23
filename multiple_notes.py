@@ -1,8 +1,7 @@
-from datetime import datetime as dt
 from display_notes_function import display_notes
+from datetime import datetime as dt
+from Data import date_now
 
-
-date_now = dt.now().date()
 notes = []
 MESSAGE = "Неверный формат, повторите попытку"
 
@@ -25,12 +24,11 @@ def get_status():
                           "\n1.новая"
                           "\n2.в процессе"
                           "\n3.выполнено\n").strip())
-            if not (1 <= n <= len(statuses) - 1):
-                print("Вы ввели неверное число!")
-            else:
-                return statuses[n - 1]
-        except:
+            return statuses[n - 1]
+        except ValueError:
             print(MESSAGE)
+        except IndexError:
+            print("Вы ввели неверное число!")
 
 
 #проверяет существует ли заметка в списке
@@ -55,7 +53,6 @@ def get_name_title():
 
 #запрашивает у пользователя данные для заметки и формирует словарь
 def get_note():
-    global date_now
     global notes
 
     note = {}

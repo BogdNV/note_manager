@@ -9,7 +9,7 @@ print("Выберите новый статус заметки:\n1. выполн
 while True:
     try:
         status = int(input("Выберите новый статус (укажите число): "))
-        if status < 0 or status >= len(statuses):
+        if status not in (1, 2, 3):
             print(f"Ошибка введите число от 1 до {len(statuses)}")
         elif statuses[status-1] == current_status:
             print("Статус не обновлён")
