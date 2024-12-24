@@ -29,8 +29,10 @@ while True:
             update_note(notes[n-1])
         elif flag == 4:
             delete_note(notes)
-        elif flag == 5:
+        else:
             res = run_search_notes(notes)
             display_notes(res)
     except ValueError:
         print("Неверный формат, повторите попытку")
+    except IndexError:
+        print("Неверный пункт, повторите попытку")
