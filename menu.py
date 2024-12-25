@@ -24,9 +24,9 @@ while True:
         elif flag == 2:
             display_notes(notes)
         elif flag == 3:
-            display_notes(notes)
-            n = int(input("Укажите номер заметки: "))
-            update_note(notes[n-1])
+            if display_notes(notes):
+                n = int(input("Укажите номер заметки: "))
+                update_note(notes[n-1])
         elif flag == 4:
             delete_note(notes)
         else:
