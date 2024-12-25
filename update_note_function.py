@@ -18,23 +18,31 @@ def update_note(note: dict):
     """Функция обновляет заметку на основе введённых данный с клавиатуры"""
     print("Текущие данные заметки:")
     print_note(note)
+    note_keys = ["username", "title", "content", "status", "issue_date"]
 
-    flag = input("Какие данные вы хотите обновить? (username, title, content, status, issue_date) "
-                 "(stop, стоп) для отмены: ").strip().lower()
+    try:
+        flag = int(input("Какие данные Вы хотите обновить?:"
+                         "\n1. username"
+                         "\n2. title"
+                         "\n3. content"
+                         "\n4. status"
+                         "\n5. issue_date"
+                         "\n6. Отмена\n").strip())
+        while flag not in (1, 2, 3, 4, 5, 6):
+            flag = int(input("неверный пункт, повторите попытку!"))
+    except ValueError:
+        print("Неверный формат, повторите попытку!")
 
-    while flag not in note or flag == "created_date":
-        if flag in ("stop", "стоп"):
-            print("Обновление отменено.")
-            return
-        flag = input("Неверный формат, повторите попытку!: ").strip().lower()
-
-    if flag == "issue_date":
+    if flag == 6:
+        print("Обновление отменено.")
+        return
+    elif flag == 5:
         data = get_date("%d-%m-%Y")
-        note.update({flag:data})
+        note.update({note_keys[flag-1]:data})
 
-    elif flag == "status":
+    elif flag == 4:
         statuses = ["новая", "в процессе", "выполнено"]
-        current_status = note.get(flag, "")
+        current_status = note.get(note_keys[flag-1], "")
 
         while True:
             input_string = "Выберите значение из списка:\n"
@@ -47,7 +55,7 @@ def update_note(note: dict):
 
             try:
                 status_index = int(status_input) - 1
-                note.update({flag:statuses[status_index]})
+                note.update({note_keys[flag-1]:statuses[status_index]})
                 break
             except ValueError:
                 print("Неверный формат. Введите номер статуса.")
@@ -56,7 +64,7 @@ def update_note(note: dict):
 
     else:
         val = input("Введите новое значение: ").strip().lower()
-        note.update({flag:val.capitalize()})
+        note.update({note_keys[flag-1]:val.capitalize()})
 
     print("\nОбновление успешно завершено!\n")
     print("Обновленные данные заметки:")
