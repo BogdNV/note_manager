@@ -17,6 +17,9 @@ while True:
                          "\n6. Завершить\n").strip())
         if flag == 6:
             break
+        elif flag not in (1, 2, 3, 4, 5):
+            print("Неверный пункт, повторите попытку")
+            continue
         elif flag == 1:
             note = create_note()
             notes.append(note)
@@ -30,9 +33,6 @@ while True:
         elif flag == 4:
             delete_note(notes)
         else:
-            res = run_search_notes(notes)
-            display_notes(res)
+            run_search_notes(notes)
     except ValueError:
         print("Неверный формат, повторите попытку")
-    except IndexError:
-        print("Неверный пункт, повторите попытку")
