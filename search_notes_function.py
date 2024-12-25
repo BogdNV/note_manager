@@ -1,5 +1,5 @@
 from display_notes_function import display_notes
-from Data import generate_notes
+from Data import generate_notes, check_imported
 from create_note_function import get_status
 
 
@@ -37,15 +37,18 @@ def handle_choice(choice, notes):
 
 lst = tuple(generate_notes(10))
 
-def run_search_notes(notes):
+@check_imported
+def run_search_notes(notes, **kwargs):
+    exit_message = "Вернуться в предыдущее меню" if kwargs.get("imported", False) else "Завершить"
+
     while True:
         try:
-            flag = int(input("Выберите пункт (укажите число):"
+            flag = int(input(f"Выберите пункт (укажите число):"
                              "\n1. Поиск по ключевому слову"
                              "\n2. Поиск по статусу"
                              "\n3. Поиск по ключевому слову и статусу"
                              "\n4. Показать текущие заметки"
-                             "\n5. Завершить\n").strip())
+                             f"\n5. {exit_message}\n").strip())
             if flag == 5:
                 break
             elif flag not in (1, 2, 3, 4):
@@ -57,4 +60,4 @@ def run_search_notes(notes):
 
 
 if __name__ == '__main__':
-    run_search_notes(lst)
+    run_search_notes(lst, imported=False)
