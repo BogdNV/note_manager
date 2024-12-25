@@ -1,7 +1,5 @@
-from wsgiref.util import request_uri
-
 from display_notes_function import display_notes
-from Data import generate_notes, print_
+from Data import generate_notes, print_, check_imported
 
 @print_
 def delete_notes_by_criteria(list_notes, val):
@@ -43,7 +41,10 @@ def delete_note_by_number(list_notes, number):
 
 lst = list(generate_notes(5))
 
-def delete_note(list_notes):
+@check_imported
+def delete_note(list_notes, **kwargs):
+    exit_message = "Вернуться в предыдущее меню" if kwargs.get("imported", False) else "Завершить"
+
     if not list_notes:
         print("Список пустой!\n")
         return list_notes
@@ -54,7 +55,7 @@ def delete_note(list_notes):
                              "\n1. Удалить все заметки по имени пользователя или названию заголовка"
                              "\n2. Удалить по номеру"
                              "\n3. Показать текущие заметки"
-                             "\n4. Завершить\n").strip())
+                             f"\n4. {exit_message}\n").strip())
             if flag == 4:
                 break
             elif flag not in (1, 2, 3):
@@ -65,7 +66,7 @@ def delete_note(list_notes):
                 list_notes = delete_notes_by_criteria(list_notes, name)
             elif flag == 2:
                 n = int(input("Укажите номер заметки: ").strip().lower())
-                list_notes = delete_note_by_number(lst, n - 1)
+                list_notes = delete_note_by_number(list_notes, n - 1)
             else:
                 display_notes(list_notes)
         except ValueError:
@@ -73,4 +74,4 @@ def delete_note(list_notes):
 
 
 if __name__ == '__main__':
-    delete_note(lst)
+    delete_note(lst, imported=False)
