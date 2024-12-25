@@ -15,7 +15,9 @@ def display_notes(notes):
             print(ind + f"Дата создания: {note.get("created_date", date_now).strftime("%d-%m-%Y")}")
             print(ind + f"Дедлайн: {note.get("issue_date", date_now).strftime("%d-%m-%Y")}")
             print("-"*20)
+        return True
     else:
         print("-" * 20)
         print("Список заметок пуст.")
         print("-" * 20)
+        return False
