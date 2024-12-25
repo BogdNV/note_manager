@@ -1,3 +1,4 @@
+from functools import wraps
 from datetime import timedelta, datetime as dt
 import random
 
@@ -21,9 +22,19 @@ def generate_notes(cnt):
         yield d
 
 def print_(func):
+    @wraps(func)
     def wrapper(*args, **kwg):
         print('-'*20)
         res = func(*args, **kwg)
         print('-' * 20)
         return res
+    return wrapper
+
+
+def check_imported(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        imported = kwargs.get("imported", not (globals().get("__name__") == "__main__"))
+        kwargs["imported"] = imported
+        return func(*args, **kwargs)
     return wrapper
