@@ -1,5 +1,7 @@
+import datetime
+
 def save_notes_to_file(notes, filename):
-    from datetime import datetime as dt
+
     if not notes:
         print("Список пуст")
         return
@@ -10,11 +12,15 @@ def save_notes_to_file(notes, filename):
                 file.write(f"  Заголовок: {note.get("title")}\n")
                 file.write(f"  Описание: {note.get("content")}\n")
                 file.write(f"  Статус: {note.get("status")}\n")
-                file.write(f"  Дата создания: {note.get("created_date").strftime("%d-%m-%Y")}\n")
-                file.write(f"  Дедлайн: {note.get("issue_date").strftime("%d-%m-%Y")}\n")
+                if isinstance(created_date, datetime.date):
+                    created_date = created_date.strftime("%d-%m-%Y")
+                if isinstance(issue_date, datetime.date):
+                    issue_date = issue_date.strftime("%d-%m-%Y")
+                file.write(f"  Дата создания: {created_date}\n")
+                file.write(f"  Дедлайн: {issue_date}\n")
                 file.write("\n")
-    except FileExistsError:
-        print("Файл с таким именем уже существует!")
+    except Exception:
+        print("Что-то пошло не так")
 
 def main():
     from Data import generate_notes, date_now
