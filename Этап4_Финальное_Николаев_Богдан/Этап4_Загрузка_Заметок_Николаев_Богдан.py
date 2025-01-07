@@ -19,7 +19,20 @@ def load_notes_from_file(filename):
     except FileNotFoundError:
         with open(filename, 'w', encoding='utf-8') as file:
             print(f"Файл {filename} не найден. Создан новый файл.")
-    except PermissionError:
-        print("Отсутсвие прав доступа")
     finally:
         return notes
+
+def main():
+    import os
+    files = []
+    for file_name in os.listdir():
+        if file_name.split('.')[1] == "yaml":
+            files.append(file_name)
+    from display_notes_function import display_notes
+    if files:
+        file_name = files[0]
+        notes = load_notes_from_file(file_name)
+        display_notes(notes)
+
+if __name__ == '__main__':
+    main()
