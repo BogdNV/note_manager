@@ -26,7 +26,7 @@ def main():
     import os
     files = []
     for file_name in os.listdir():
-        if file_name.split('.')[1] == "yaml":
+        if file_name.endswith("yaml"):
             files.append(file_name)
     from display_notes_function import display_notes
     if files:
