@@ -22,8 +22,10 @@ def save_notes_json(notes, filename):
 
 
 def main():
-    notes = list(generate_notes(1))
-    save_notes_json(notes, "data.json")
+    from Data import generate_notes, date_now
+    notes = list(generate_notes(5))
+    file_name = "notes_" + date_now.strftime("%d_%m_%Y") + ".json"
+    save_notes_json(notes, file_name)
 
 
 if __name__ == '__main__':
