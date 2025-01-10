@@ -1,7 +1,7 @@
-import datetime
+
 
 def save_notes_to_file(notes, filename):
-
+    import datetime
     if not notes:
         print("Список пуст")
         return
@@ -12,6 +12,8 @@ def save_notes_to_file(notes, filename):
                 file.write(f"  Заголовок: {note.get("title")}\n")
                 file.write(f"  Описание: {note.get("content")}\n")
                 file.write(f"  Статус: {note.get("status")}\n")
+                created_date = note.get("created_date")
+                issue_date = note.get("issue_date")
                 if isinstance(created_date, datetime.date):
                     created_date = created_date.strftime("%d-%m-%Y")
                 if isinstance(issue_date, datetime.date):
@@ -19,8 +21,8 @@ def save_notes_to_file(notes, filename):
                 file.write(f"  Дата создания: {created_date}\n")
                 file.write(f"  Дедлайн: {issue_date}\n")
                 file.write("\n")
-    except Exception:
-        print("Что-то пошло не так")
+    except Exception as e:
+        print(f"Что-то пошло не так\n{e}")
 
 def main():
     from Data import generate_notes, date_now
