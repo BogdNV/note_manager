@@ -57,6 +57,17 @@ def load_notes_from_db(db_path):
 
     return notes
 
+def update_note_in_db(note_id, updates, db_path):
+
+    with sq.connect(db_path) as con:
+        cur = con.cursor()
+
+        cur.execute("""UPDATE notes
+        SET title = ?, content = ?, status = ?, issue_date = ?
+        WHERE id = ?;""",  (updates['title'], updates['content'], updates['status'], updates['issue_date'], note_id))
+
+        con.commit()
+
 if __name__ == '__main__':
     # save_note_to_db({
     #     "username": "Богдан",
@@ -67,4 +78,11 @@ if __name__ == '__main__':
     #     "issue_date":"31-01-2025"
     # }, "notes.db")
 
-    print(load_notes_from_db("notes.db"))
+    # print(load_notes_from_db("notes.db"))
+
+    update_note_in_db(1, {
+        "title": "Сделать ДЗ",
+        "content": "написать БД",
+        "status": "выполнено",
+        "issue_date": "01-02-2025"
+    }, "notes.db")
