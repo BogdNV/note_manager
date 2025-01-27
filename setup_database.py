@@ -1,5 +1,6 @@
 import sqlite3 as sq
 import datetime
+from pprint import pprint
 
 from greetings import username, title
 
@@ -75,6 +76,26 @@ def delete_note_from_db(note_id, db_path):
         cur.execute("DELETE FROM notes WHERE id = ?;", (note_id,))
         con.commit()
 
+def search_notes_by_keyword(keyword, db_path):
+    with sq.connect(db_path) as con:
+        cur = con.cursor()
+
+        cur.execute("""SELECT *
+        FROM notes
+        WHERE title LIKE ? OR username LIKE ?""", (f"%{keyword}%", f"%{keyword}%"))
+        notes = []
+        for row in cur.fetchall():
+            notes.append({
+                'id': row[0],
+                'username': row[1],
+                'title': row[2],
+                'content': row[3],
+                'status': row[4],
+                'created_date': row[5],
+                'issue_date': row[6]})
+        return  notes
+
+
 if __name__ == '__main__':
     # save_note_to_db({
     #     "username": "Богдан",
@@ -94,4 +115,8 @@ if __name__ == '__main__':
     #     "issue_date": "01-02-2025"
     # }, "notes.db")
 
-    delete_note_from_db(2, "notes.db")
+    # delete_note_from_db(2, "notes.db")
+    n = search_notes_by_keyword("Богдан", r"data_base\note_manager.db")
+
+    pprint(n)
+    print(len(n))
