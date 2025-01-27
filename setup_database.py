@@ -68,6 +68,13 @@ def update_note_in_db(note_id, updates, db_path):
 
         con.commit()
 
+def delete_note_from_db(note_id, db_path):
+    with sq.connect(db_path) as con:
+        cur = con.cursor()
+
+        cur.execute("DELETE FROM notes WHERE id = ?;", (note_id,))
+        con.commit()
+
 if __name__ == '__main__':
     # save_note_to_db({
     #     "username": "Богдан",
@@ -80,9 +87,11 @@ if __name__ == '__main__':
 
     # print(load_notes_from_db("notes.db"))
 
-    update_note_in_db(1, {
-        "title": "Сделать ДЗ",
-        "content": "написать БД",
-        "status": "выполнено",
-        "issue_date": "01-02-2025"
-    }, "notes.db")
+    # update_note_in_db(1, {
+    #     "title": "Сделать ДЗ",
+    #     "content": "написать БД",
+    #     "status": "выполнено",
+    #     "issue_date": "01-02-2025"
+    # }, "notes.db")
+
+    delete_note_from_db(2, "notes.db")
