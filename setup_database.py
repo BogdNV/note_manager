@@ -28,5 +28,43 @@ def save_note_to_db(note, db_path):
     if isinstance(issue_date, datetime.date):
         issue_date = issue_date.strftime("%d-%m-%Y")
     with sq.connect(db_path) as con:
-        cur = con.cursor("""INSERT INTO notes (username, title, content, status, created_date, issue_date) 
-        VALUES (?, ?, ?, ?, ?, ?)""", username, title, content, status, created_date, issue_date)
+        cur = con.cursor()
+
+        cur.execute("""INSERT INTO notes (username, title, content, status, created_date, issue_date) 
+        VALUES (?, ?, ?, ?, ?, ?)""", (username, title, content, status, created_date, issue_date))
+
+        con.commit()
+
+def load_notes_from_db(db_path):
+    notes = []
+    with sq.connect(db_path) as con:
+        cur = con.cursor()
+
+        cur.execute("SELECT * FROM notes;")
+        res = cur.fetchall()
+        for n in res:
+            note = {}
+            note.setdefault("id", n[0])
+            note.setdefault("username", n[1])
+            note.setdefault("title", n[2])
+            note.setdefault("content", n[3])
+            note.setdefault("status", n[4])
+            note.setdefault("created_date", n[5])
+            note.setdefault("issue_date", n[6])
+
+            notes.append(note)
+
+
+    return notes
+
+if __name__ == '__main__':
+    # save_note_to_db({
+    #     "username": "Богдан",
+    #     "title": "Сделать ДЗ",
+    #     "content":"",
+    #     "status": "новая",
+    #     "created_date":"27-01-2025",
+    #     "issue_date":"31-01-2025"
+    # }, "notes.db")
+
+    print(load_notes_from_db("notes.db"))
